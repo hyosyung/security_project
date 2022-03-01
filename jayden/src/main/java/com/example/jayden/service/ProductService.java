@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,7 @@ public class ProductService {
     }
 
     private void validateUserInfo(Product product, AccountDto accountDto) throws UserInfoValidationException {
-        if(accountDto.getRole()!= Role.ADMIN.name() && product.getAccountId() != accountDto.getId()){
+        if (!Role.isAdmin(accountDto.getRole()) && !Objects.equals(product.getAccountId(), accountDto.getId())) {
             throw new UserInfoValidationException("해당 상품에 대한 권한이 없습니다.");
         }
     }
