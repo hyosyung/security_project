@@ -29,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/accounts/**").permitAll()
-                .antMatchers("/products**").permitAll()  // 인증권한이 필요한 페이지.
+                .antMatchers("/products**").permitAll()
                 .antMatchers("/products/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

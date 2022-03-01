@@ -81,19 +81,19 @@ public class AccountService implements UserDetailsService {
         return dto;
     }
 
-    public AccountDto getMyInfo(String token) {
+    public AccountDto getMyInfo(String token) throws UserInfoValidationException {
         String jwt, username;
         if (token != null && token.startsWith("Bearer ")) {
             jwt = token.substring(7);
             username = jwtUtil.getUsername(jwt);
         } else {
             log.error("잘못된 토큰 형식입니다.");
-            return null;
+            throw new UserInfoValidationException("잘못된 토큰 형식입니다.");
         }
         AccountDto account = AccountDto.of(accountRepository.findAccountByUsername(username));
         if (account == null) {
             log.error("유저 정보를 찾을 수 없습니다.");
-            return null;
+            throw new UserInfoValidationException("유저 정보를 찾을 수 없습니다.");
         }
         account.setToken(token);
         return account;
