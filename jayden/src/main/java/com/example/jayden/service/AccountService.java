@@ -48,9 +48,6 @@ public class AccountService implements UserDetailsService {
             service.validate(request);
         }
         request.setPassword(passwordEncoder.encode(request.getPassword()));
-        if(accountRepository.findAccountByUsername(request.getUsername())!=null){
-            throw new UserInfoValidationException("이미 존재하는 아이디입니다.");
-        }
         Account account = accountRepository.save(Account.of(request));
         return AccountDto.of(account);
     }
